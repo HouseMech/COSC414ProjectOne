@@ -42,11 +42,3 @@ increaseBacteriaSize = function(bacteria){
     }
     return bacteria;
 }
-
-getBacteriaRadius = function(bacteria) {
-  return bacteria.radius;
-}
-
-getBacteriaCenter = function(bacteria) {
-  return bacteria.center;
-}

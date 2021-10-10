@@ -86,19 +86,19 @@ var InitDemo = function() {
 	var circleVerts = createCircle();
 
 
-	canvas.addEventListener("mousedown", function(e)
-        {
-		for (let i = 0; i < bacteriaArray.length; i++) {
+	canvas.addEventListener("mousedown", function(e) {
+		for (let i = bacteriaArray.length -1; i >= 0; i--) {
+			//i iterates backwards in order to destroy the topmost bacteria first, if they are stacked.
 		  let rect = canvas.getBoundingClientRect();
 		  let x = ((event.clientX - rect.left) / canvas.width - 0.5) * 2;
 		  let y = ((event.clientY - rect.top) / canvas.height - 0.5) * -2;
-			//console.log("Coordinate x: " + x,"Coordinate y: " + y);
-			//console.log("Coordinate bacteria x: " + bacteriaArray[i].center[0],"Coordinate bacteria y: " + bacteriaArray[i].center[1]);
 		  let distance = Math.pow(bacteriaArray[i].center[0] - x,2) + Math.pow(bacteriaArray[i].center[1] - y, 2);
+			if (distance <= bacteriaArray[i].radius) {
+		    bacteriaArray.splice(i,1);
+				break;
+		  }
 		}
 	});
-
-	//canvas.addEventListener("mousedown", isMouseClickedOnBacteria());
 
 	var loop = function(){
 
