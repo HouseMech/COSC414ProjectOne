@@ -92,8 +92,8 @@ var InitDemo = function() {
 		  let rect = canvas.getBoundingClientRect();
 		  let x = ((event.clientX - rect.left) / canvas.width - 0.5) * 2;
 		  let y = ((event.clientY - rect.top) / canvas.height - 0.5) * -2;
-		  let distance = Math.pow(bacteriaArray[i].center[0] - x,2) + Math.pow(bacteriaArray[i].center[1] - y, 2);
-			if (distance <= bacteriaArray[i].radius) {
+		  let distance = Math.pow(bacteriaArray[i].radius,2) - (Math.pow(bacteriaArray[i].center[0] - x,2) + Math.pow(bacteriaArray[i].center[1] - y, 2));
+			if (distance >= 0) {
 		    bacteriaArray.splice(i,1);
 				break;
 		  }
