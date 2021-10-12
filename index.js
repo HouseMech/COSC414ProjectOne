@@ -1,4 +1,5 @@
 var bacteriaArray = [];
+var particleArray = [];
 var vertexShaderText = [
 	'precision mediump float;',
 
@@ -11,6 +12,7 @@ var vertexShaderText = [
 	'{',
 	'	fragColor = vertColor;',
 	'	gl_Position = vec4(vertPosition,0.0,1.0);',
+	'	gl_PointSize = 3.0;',
 	'}'
 	].join('\n');
 
@@ -94,28 +96,42 @@ var InitDemo = function() {
 		  let y = ((event.clientY - rect.top) / canvas.height - 0.5) * -2;
 		  let distance = Math.pow(bacteriaArray[i].radius,2) - (Math.pow(bacteriaArray[i].center[0] - x,2) + Math.pow(bacteriaArray[i].center[1] - y, 2));
 			if (distance >= 0) {
-		    bacteriaArray.splice(i,1);
+				for (let j = 0; j < 12; j++) {
+					particleArray.push(createParticle(bacteriaArray[i]));
+				}
+		    	bacteriaArray.splice(i,1);
 				break;
 		  }
 		}
 	});
-
+	
 	var loop = function(){
-
+		gl.clearColor(0.0, 0.5, 0.0, 1.0);
+		// Clear the context with the newly set color. This is
+		// the function call that actually does the drawing.
+		gl.clear(gl.COLOR_BUFFER_BIT);
 		renderToCanvas(gl, program, circleVerts);
 
 		gl.drawArrays(gl.TRIANGLE_FAN,0,circleVerts.length/5);
 
-		for (let i = 0; i < bacteriaArray.length; i++) {
-			bacteriaArray[i] = increaseBacteriaSize(bacteriaArray[i])
-		}
 
 		for (let i = 0; i < bacteriaArray.length; i++) {
-			renderToCanvas(gl, program, bacteriaArray[i].vertices)
+			bacteriaArray[i] = increaseBacteriaSize(bacteriaArray[i]);
+			renderToCanvas(gl, program, bacteriaArray[i].vertices);
 
 			gl.drawArrays(gl.TRIANGLE_FAN,0,bacteriaArray[i].vertices.length/5);
 		}
-
+		for (let i = 0; i < particleArray.length; i++) {
+			if(particleArray[i].life<=0){
+				particleArray.splice(i, 1);
+			}else{
+				particleArray[i] = moveParticle(particleArray[i]);
+				renderToCanvas(gl, program, particleArray[i].vertices)
+				
+				gl.drawArrays(gl.POINTS,0,5);
+			}
+		}
+		
 		//call loop function whenever a frame is ready for drawing, usually it is 60fps.
 		//Also, if the tab is not focused loop function will not be called
 		requestAnimationFrame(loop);

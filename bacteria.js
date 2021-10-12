@@ -25,6 +25,9 @@ createBacteria = function() {
     bacteria.vertices = vertices;
     bacteria.center = center;
     bacteria.radius = startRadius;
+    bacteria.rColor = rColor;
+    bacteria.gColor = gColor;
+    bacteria.bColor = bColor;
 
     return bacteria;
 }
