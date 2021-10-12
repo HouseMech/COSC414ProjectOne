@@ -4,21 +4,21 @@ createBacteria = function() {
 
     var circleRadius = 0.5;
     let temp = ran*Math.PI/180;
-    let rColor = Math.round(Math.random()*10)/10
-    let gColor = Math.round(Math.random()*10)/10
-    let bColor = Math.round(Math.random()*10)/10
-    var vertices = []
-    var center = [circleRadius*Math.sin(temp), 
+    let rColor = Math.round(Math.random()*10)/10;
+    let gColor = Math.round(Math.random()*10)/10;
+    let bColor = Math.round(Math.random()*10)/10;
+    var vertices = [];
+    var center = [circleRadius*Math.sin(temp),
         circleRadius*Math.cos(temp)];
-    vertices.push(circleRadius*Math.sin(temp), 
+    vertices.push(circleRadius*Math.sin(temp),
                         circleRadius*Math.cos(temp),
-                        rColor, 
-                        gColor, 
+                        rColor,
+                        gColor,
                         bColor);
-    
+
     //console.log(vertices);
-    var startRadius = 0.05
-    for (let i = 0; i < 361; i++) {
+    var startRadius = 0.05;
+    for (let i = 0; i < 360; i++) {
         var el = i*Math.PI/180;
         vertices.push(center[0]+startRadius*Math.sin(el), center[1]+ startRadius*Math.cos(el),rColor,gColor,bColor)
     }
@@ -42,5 +42,3 @@ increaseBacteriaSize = function(bacteria){
     }
     return bacteria;
 }
-
-
