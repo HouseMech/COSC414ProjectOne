@@ -1,15 +1,14 @@
 createParticle = function(bacteria){
 
     let particle = new Object();
-    particle.vertices = [bacteria.center[0], bacteria.center[1], 
+    particle.vertices = [bacteria.center[0], bacteria.center[1],
                             bacteria.rColor, bacteria.gColor, bacteria.bColor];
     let xSign = Math.round(Math.random()) > 0.5 ? 1 : -1;
     let ySign = Math.round(Math.random()) > 0.5 ? 1 : -1;
     particle.velocityX = xSign*(Math.random() * (0.005-0.001) + 0.001);
     particle.velocityY = ySign*(Math.random() * (0.005-0.001) + 0.001);
     particle.life = 500;
-    particleArray.push(particle);
-    
+
     return(particle);
 }
 
