@@ -128,11 +128,10 @@ var InitDemo = function() {
 			}else{
 				particleArray[i] = moveParticle(particleArray[i]);
 				renderToCanvas(gl, program, particleArray[i].vertices)
-				
-				gl.drawArrays(gl.POINTS,0,5);
+				gl.drawArrays(gl.POINTS,0,1);
 			}
 		}
-		
+
 		//call loop function whenever a frame is ready for drawing, usually it is 60fps.
 		//Also, if the tab is not focused loop function will not be called
 		requestAnimationFrame(loop);
