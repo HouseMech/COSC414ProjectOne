@@ -124,6 +124,7 @@ var InitDemo = function() {
 		for (let i = 0; i < particleArray.length; i++) {
 			if(particleArray[i].life<=0){
 				particleArray.splice(i, 1);
+				i--;
 			}else{
 				particleArray[i] = moveParticle(particleArray[i]);
 				renderToCanvas(gl, program, particleArray[i].vertices)
