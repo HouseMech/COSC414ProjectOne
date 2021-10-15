@@ -92,6 +92,7 @@ var InitDemo = function() {
 				}
 		    	bacteriaArray.splice(i,1);
 				updatePlayerScore(10);
+				bacteriaPopped();
 				break;
 		  }
 		}
@@ -101,7 +102,7 @@ var InitDemo = function() {
 	var numOfBacteria = Math.floor(Math.random() * (bacteriaMax - bacteriaMin + 1) + bacteriaMin);
 	var indexToSpawnBacteria = -1;
 	var loop = function(){
-		score(bacteriaArray);
+		score(bacteriaArray, numOfBacteria);
 		gl.clearColor(0.0, 0.5, 0.0, 1.0);
 		// Clear the context with the newly set color. This is
 		// the function call that actually does the drawing.

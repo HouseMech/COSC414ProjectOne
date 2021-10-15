@@ -2,23 +2,25 @@
 //outdated
 let bacteriaWinAmount = 5;
 let completeCounter = 0;
+let playerKillCount =0;
 
 
-let bacteriaScoreWinAmount = 50;
+let bacteriaScoreWinAmount = 100;
 let bacteriaWin = false;
 let bacteriaScore =0;
 
 
-let playerScoreWinAmount = 50;
+let playerScoreWinAmount = 60;
 let playerWin = false;
 let playerScore =0;
 
 
 
-score = function(bacteriaArray) { 
-    
+score = function(bacteriaArray, numOfBacteria) { 
+    playerScoreWinAmount = numOfBacteria*10;
+    bacteriaScoreWinAmount = numOfBacteria*10;
     if(playerWin&&!bacteriaWin){
-        
+
         document.getElementById("playerScore").innerHTML = "Player Wins. Score: " + getPlayerScore();
       // End Game  
       return;
@@ -40,11 +42,16 @@ score = function(bacteriaArray) {
        bacteriaArray[i].fullyGrown = true;
        updateBacteriaScore(5);
        }
-
        if(completeCounter >= bacteriaWinAmount){
         // Bacteria Wins. Pause
         bacteriaWin = true;
-      }     
+      }
+      
+      if(playerKillCount >= numOfBacteria){
+         // alert("player Wins" + playerKillCount);
+        playerWin = true;
+      }    
+      
    }
   // document.getElementById("playerScore").innerHTML = "Score: 69";
 }
@@ -81,4 +88,8 @@ getPlayerScore= function(){
 getBacteriaScore= function(){
 
     return Math.round(bacteriaScore*100)/100;
+}
+
+bacteriaPopped = function(){
+    playerKillCount++;
 }
