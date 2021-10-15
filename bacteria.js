@@ -1,3 +1,7 @@
+// Variable used in score/ win calculation
+var fullyGrown = false;
+
+var maxRadius = 0.2;
 createBacteria = function() {
     let bacteria = new Object();
     let ran = Math.floor(Math.random()*360);
@@ -33,7 +37,7 @@ createBacteria = function() {
 }
 
 increaseBacteriaSize = function(bacteria){
-    if(bacteria.radius >= 0.2){
+    if(bacteria.radius >= maxRadius){
         return bacteria;
     }
     bacteria.radius = bacteria.radius + 0.0003;
@@ -43,5 +47,6 @@ increaseBacteriaSize = function(bacteria){
         bacteria.vertices[pos++] = bacteria.center[0]+bacteria.radius*Math.sin(el);
         bacteria.vertices[pos++] = bacteria.center[1]+ bacteria.radius*Math.cos(el);
     }
+    updateBacteriaScore(0.04); //amount updated per size increment
     return bacteria;
 }

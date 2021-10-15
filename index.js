@@ -100,12 +100,14 @@ var InitDemo = function() {
 					particleArray.push(createParticle(bacteriaArray[i]));
 				}
 		    	bacteriaArray.splice(i,1);
+				updatePlayerScore(10);
 				break;
 		  }
 		}
 	});
 	
 	var loop = function(){
+		score(bacteriaArray);
 		gl.clearColor(0.0, 0.5, 0.0, 1.0);
 		// Clear the context with the newly set color. This is
 		// the function call that actually does the drawing.
