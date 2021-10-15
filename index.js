@@ -1,5 +1,9 @@
 var bacteriaArray = [];
 var particleArray = [];
+var bacteriaMax = 10;
+var bacteriaMin = 5;
+var spawnRate = 0.05;
+var gameTotalLifetime = 0;
 var vertexShaderText = [
 	'precision mediump float;',
 
@@ -75,19 +79,6 @@ var InitDemo = function() {
 		return;
 	}
 
-
-
-	var numOfBacteria = 5
-
-	for (let i = 0; i < numOfBacteria; i++) {
-		bacteriaArray.push(createBacteria());
-		renderToCanvas(gl, program, bacteriaArray[i].vertices)
-
-		gl.drawArrays(gl.TRIANGLE_FAN,0,bacteriaArray[i].vertices.length/5);
-	}
-	var circleVerts = createCircle();
-
-
 	canvas.addEventListener("mousedown", function(e) {
 		for (let i = bacteriaArray.length -1; i >= 0; i--) {
 			//i iterates backwards in order to destroy the topmost bacteria first, if they are stacked.
@@ -106,6 +97,9 @@ var InitDemo = function() {
 		}
 	});
 	
+	var circleVerts = createCircle();
+	var numOfBacteria = Math.floor(Math.random() * (bacteriaMax - bacteriaMin + 1) + bacteriaMin);
+	var indexToSpawnBacteria = -1;
 	var loop = function(){
 		score(bacteriaArray);
 		gl.clearColor(0.0, 0.5, 0.0, 1.0);
@@ -116,7 +110,13 @@ var InitDemo = function() {
 
 		gl.drawArrays(gl.TRIANGLE_FAN,0,circleVerts.length/5);
 
-
+		if(indexToSpawnBacteria < numOfBacteria-1){
+			var ranNumber = Math.random();
+			if(ranNumber < spawnRate){
+				indexToSpawnBacteria++;
+				bacteriaArray.push(createBacteria());
+			}
+		}
 		for (let i = 0; i < bacteriaArray.length; i++) {
 			bacteriaArray[i] = increaseBacteriaSize(bacteriaArray[i]);
 			renderToCanvas(gl, program, bacteriaArray[i].vertices);
@@ -136,6 +136,7 @@ var InitDemo = function() {
 
 		//call loop function whenever a frame is ready for drawing, usually it is 60fps.
 		//Also, if the tab is not focused loop function will not be called
+		gameTotalLifetime++;
 		requestAnimationFrame(loop);
 	};
 	requestAnimationFrame(loop);
