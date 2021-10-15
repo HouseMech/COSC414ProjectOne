@@ -2,10 +2,12 @@
 var fullyGrown = false;
 
 var maxRadius = 0.2;
+var rngGrowthRate =0;
+var bacteriaScoreFactor = 0.04;
 createBacteria = function() {
     let bacteria = new Object();
     let ran = Math.floor(Math.random()*360);
-
+    rngGrowthRate = Math.random()*0.002;
     var circleRadius = 0.5;
     let temp = ran*Math.PI/180;
     let rColor = Math.round(Math.random()*10)/10;
@@ -40,13 +42,13 @@ increaseBacteriaSize = function(bacteria){
     if(bacteria.radius >= maxRadius){
         return bacteria;
     }
-    bacteria.radius = bacteria.radius + 0.0003;
+    bacteria.radius = bacteria.radius + 0.0003 + rngGrowthRate;
     for (let i = 0; i < bacteria.vertices.length; i += 5) {
         var el = i*Math.PI/180;
         var pos = i;
         bacteria.vertices[pos++] = bacteria.center[0]+bacteria.radius*Math.sin(el);
         bacteria.vertices[pos++] = bacteria.center[1]+ bacteria.radius*Math.cos(el);
     }
-    updateBacteriaScore(0.04); //amount updated per size increment
+    updateBacteriaScore(bacteriaScoreFactor); //amount updated per size increment
     return bacteria;
 }
