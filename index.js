@@ -81,18 +81,20 @@ var InitDemo = function() {
 	}
 
 	canvas.addEventListener("mousedown", function(e) {
+		let rect = canvas.getBoundingClientRect();
+		let x = ((event.clientX - rect.left) / canvas.width - 0.5) * 2;
+		let y = ((event.clientY - rect.top) / canvas.height - 0.5) * -2;
+		if (poisonArray.length < bacteriaMin) {
+			poisonArray.push(createPoison(x,y));
+		}
 		for (let i = bacteriaArray.length -1; i >= 0; i--) {
 			//i iterates backwards in order to destroy the topmost bacteria first, if they are stacked.
-		  let rect = canvas.getBoundingClientRect();
-		  let x = ((event.clientX - rect.left) / canvas.width - 0.5) * 2;
-		  let y = ((event.clientY - rect.top) / canvas.height - 0.5) * -2;
-		poisonArray.push(createPoison(x,y));
 		  let distance = Math.pow(bacteriaArray[i].radius,2) - (Math.pow(bacteriaArray[i].center[0] - x,2) + Math.pow(bacteriaArray[i].center[1] - y, 2));
 			if (distance >= 0 && !(playerWin || bacteriaWin)) {
 				for (let j = 0; j < 12; j++) {
 					particleArray.push(createParticle(bacteriaArray[i]));
 				}
-				
+
 		    	bacteriaArray.splice(i,1);
 				updatePlayerScore(10);
 				bacteriaPopped();
@@ -100,7 +102,7 @@ var InitDemo = function() {
 		  }
 		}
 	});
-	
+
 	var circleVerts = createCircle();
 	var numOfBacteria = Math.floor(Math.random() * (bacteriaMax - bacteriaMin + 1) + bacteriaMin);
 	var indexToSpawnBacteria = -1;
@@ -129,7 +131,7 @@ var InitDemo = function() {
 
 			gl.drawArrays(gl.TRIANGLE_FAN,0,bacteriaArray[i].vertices.length/5);
 		}
-		
+
 		for (let i = 0; i < poisonArray.length; i++) {
 			poisonArray[i] = increasePoisonSize(poisonArray[i]);
 			poisonEffect(poisonArray[i],bacteriaArray);

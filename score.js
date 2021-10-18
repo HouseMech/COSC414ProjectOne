@@ -1,6 +1,6 @@
 // Win conditions currently are if score is
 //outdated
-let bacteriaWinAmount = 5;
+let bacteriaWinAmount = 2;
 let completeCounter = 0;
 let playerKillCount =0;
 
@@ -16,13 +16,13 @@ let playerScore =0;
 
 
 
-score = function(bacteriaArray, numOfBacteria) { 
+score = function(bacteriaArray, numOfBacteria) {
     playerScoreWinAmount = numOfBacteria*10;
     bacteriaScoreWinAmount = numOfBacteria*10;
     if(playerWin&&!bacteriaWin){
 
         document.getElementById("playerScore").innerHTML = "Player Wins. Score: " + getPlayerScore();
-      // End Game  
+      // End Game
       return;
     }
 
@@ -38,7 +38,7 @@ score = function(bacteriaArray, numOfBacteria) {
     for(let i=0; i < bacteriaArray.length; i++){
         // Change to different identifier after crust changes
        if(bacteriaArray[i].radius >= maxRadius && !bacteriaArray[i].fullyGrown){
-       completeCounter++; 
+       completeCounter++;
        bacteriaArray[i].fullyGrown = true;
        updateBacteriaScore(5);
        }
@@ -46,12 +46,12 @@ score = function(bacteriaArray, numOfBacteria) {
         // Bacteria Wins. Pause
         bacteriaWin = true;
       }
-      
+
       if(playerKillCount >= numOfBacteria){
          // alert("player Wins" + playerKillCount);
         playerWin = true;
-      }    
-      
+      }
+
    }
   // document.getElementById("playerScore").innerHTML = "Score: 69";
 }
