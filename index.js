@@ -1,5 +1,6 @@
 var bacteriaArray = [];
 var particleArray = [];
+var poisonArray = [];
 var bacteriaMax = 10;
 var bacteriaMin = 5;
 var spawnRate = 0.05;
@@ -85,11 +86,13 @@ var InitDemo = function() {
 		  let rect = canvas.getBoundingClientRect();
 		  let x = ((event.clientX - rect.left) / canvas.width - 0.5) * 2;
 		  let y = ((event.clientY - rect.top) / canvas.height - 0.5) * -2;
+		poisonArray.push(createPoison(x,y));
 		  let distance = Math.pow(bacteriaArray[i].radius,2) - (Math.pow(bacteriaArray[i].center[0] - x,2) + Math.pow(bacteriaArray[i].center[1] - y, 2));
-			if (distance >= 0) {
+			if (distance >= 0 && !(playerWin || bacteriaWin)) {
 				for (let j = 0; j < 12; j++) {
 					particleArray.push(createParticle(bacteriaArray[i]));
 				}
+				
 		    	bacteriaArray.splice(i,1);
 				updatePlayerScore(10);
 				bacteriaPopped();
@@ -118,12 +121,23 @@ var InitDemo = function() {
 				bacteriaArray.push(createBacteria());
 			}
 		}
+	//	console.log(bacteriaArray);
+	//	console.log(poisonArray);
 		for (let i = 0; i < bacteriaArray.length; i++) {
 			bacteriaArray[i] = increaseBacteriaSize(bacteriaArray[i]);
 			renderToCanvas(gl, program, bacteriaArray[i].vertices);
 
 			gl.drawArrays(gl.TRIANGLE_FAN,0,bacteriaArray[i].vertices.length/5);
 		}
+		
+		for (let i = 0; i < poisonArray.length; i++) {
+			poisonArray[i] = increasePoisonSize(poisonArray[i]);
+			poisonEffect(poisonArray[i],bacteriaArray);
+			renderToCanvas(gl, program, poisonArray[i].vertices);
+
+			gl.drawArrays(gl.LINES,0,poisonArray[i].vertices.length/5);
+		}
+
 		for (let i = 0; i < particleArray.length; i++) {
 			if(particleArray[i].life<=0){
 				particleArray.splice(i, 1);
